@@ -1,17 +1,30 @@
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useState } from "react";
 import styles from "../styles/authstyles";
 
-export default function AuthScreen({ navigation }) {
+export default function AuthScreen(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const loginHandle = () => {
+    console.log("email =", email);
+    console.log("pwd =", password);
+    email === "email" && password === "123"
+      ? props.setIsLoggedIn(true)
+      : console.log("invalide");
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>QuitSpace</Text>
       </View>
-      
+
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Welcome Back!</Text>
         <Text style={styles.subtitle}>
@@ -41,7 +54,7 @@ export default function AuthScreen({ navigation }) {
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => loginHandle()}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
 
@@ -51,9 +64,9 @@ export default function AuthScreen({ navigation }) {
           <View style={styles.dividerLine} />
         </View>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.secondaryButton}
-          onPress={() => navigation.navigate("Signup")}
+          onPress={() => props.navigation.navigate("Signup")}
         >
           <Text style={styles.secondaryButtonText}>Create New Account</Text>
         </TouchableOpacity>

@@ -7,8 +7,8 @@ export default function ParentTabs() {
   return (
     <SafeAreaView>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Tracking" component={TrackingScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Location" component={LocationScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
     </SafeAreaView>

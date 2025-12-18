@@ -5,8 +5,9 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.imageCard}>
-        <Text style={styles.subtitle}> home screen </Text>
+              <Text style={styles.subtitle}> location screen </Text>
       </View>
+     
     </View>
   );
 }
