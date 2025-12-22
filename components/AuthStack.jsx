@@ -1,22 +1,36 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthScreen from "../screens/AuthScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
-import SignupScreen from "../screens/SignupScreen";
+import { createStackNavigator } from '@react-navigation/stack';
+import SignInScreen from '../screens/auth/SignInScreen';
+import SignUpScreen from '../screens/auth/SignUpScreen';
+import WelcomeScreen from '../screens/auth/WelcomeScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
-export default function AuthStack({ setIsLoggedIn }) {
+export default function AuthStack({ setIsLoggedIn, setUserRole }) {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Welcome"
-        component={WelcomeScreen}
-        screenOptions={{ headerShown: false }}
-      />
-      <Stack.Screen name="Auth">
-        {(props) => <AuthScreen {...props} setIsLoggedIn={setIsLoggedIn} />}
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="SignIn">
+        {(props) => (
+          <SignInScreen 
+            {...props} 
+            setIsLoggedIn={setIsLoggedIn}
+            setUserRole={setUserRole}
+          />
+        )}
       </Stack.Screen>
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="SignUp">
+        {(props) => (
+          <SignUpScreen 
+            {...props} 
+            setIsLoggedIn={setIsLoggedIn}
+            setUserRole={setUserRole}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
