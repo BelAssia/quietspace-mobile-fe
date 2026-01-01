@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../../styles/user/userHomeStyles';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (

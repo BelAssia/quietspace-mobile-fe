@@ -1,11 +1,11 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import SignInScreen from '../screens/auth/SignInScreen';
-import SignUpScreen from '../screens/auth/SignUpScreen';
-import WelcomeScreen from '../screens/auth/WelcomeScreen';
+import { createStackNavigator } from "@react-navigation/stack";
+import SignInScreen from "../screens/auth/SignInScreen";
+import SignUpScreen from "../screens/auth/SignUpScreen";
+import WelcomeScreen from "../screens/auth/WelcomeScreen";
 
 const Stack = createStackNavigator();
 
-export default function AuthStack({ setIsLoggedIn, setUserRole }) {
+export default function AuthStack() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -14,22 +14,10 @@ export default function AuthStack({ setIsLoggedIn, setUserRole }) {
     >
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="SignIn">
-        {(props) => (
-          <SignInScreen 
-            {...props} 
-            setIsLoggedIn={setIsLoggedIn}
-            setUserRole={setUserRole}
-          />
-        )}
+        {(props) => <SignInScreen {...props} />}
       </Stack.Screen>
       <Stack.Screen name="SignUp">
-        {(props) => (
-          <SignUpScreen 
-            {...props} 
-            setIsLoggedIn={setIsLoggedIn}
-            setUserRole={setUserRole}
-          />
-        )}
+        {(props) => <SignUpScreen {...props} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

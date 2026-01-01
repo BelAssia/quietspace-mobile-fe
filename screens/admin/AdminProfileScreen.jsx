@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../../styles/admin/adminProfileStyles';
-export default function AdminProfileScreen({ setIsLoggedIn }) {
+export default function AdminProfileScreen() {
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
   };
 
   return (

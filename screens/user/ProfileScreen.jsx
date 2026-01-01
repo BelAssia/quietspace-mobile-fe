@@ -1,11 +1,15 @@
 // ==================== screens/user/ProfileScreen.jsx ====================
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import styles from '../../styles/user/userProfileStyles';
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "../../styles/user/userProfileStyles";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/auth/AuthSlice";
+export default function ProfileScreen() {
+  const dispatch = useDispatch();
 
-export default function ProfileScreen({ setIsLoggedIn }) {
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
+    dispatch(logout());
   };
 
   return (
