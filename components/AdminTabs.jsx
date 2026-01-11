@@ -1,12 +1,27 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import AdminDashboardScreen from "../screens/admin/AdminDashboardScreen";
 import ManagePlacesScreen from "../screens/admin/ManagePlacesScreen";
+import AddPlaceScreen from "../screens/admin/AddPlaceScreen";
 import FeedbackScreen from "../screens/admin/FeedbackScreen";
 import AdminProfileScreen from "../screens/admin/AdminProfileScreen";
 
 const Tab = createBottomTabNavigator();
-
+const PlacesStack = createStackNavigator();
+function PlacesStackNavigator() {
+  return (
+    <PlacesStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <PlacesStack.Screen name="ManagePlaces" component={ManagePlacesScreen} />
+      <PlacesStack.Screen name="AddPlace" component={AddPlaceScreen} />
+      {/* <PlacesStack.Screen name="EditPlace" component={EditPlaceScreen} /> */}
+    </PlacesStack.Navigator>
+  );
+}
 export default function AdminTabs() {
   return (
     <Tab.Navigator
@@ -50,7 +65,8 @@ export default function AdminTabs() {
       />
       <Tab.Screen
         name="Places"
-        component={ManagePlacesScreen}
+        // component={ManagePlacesScreen}
+        component={PlacesStackNavigator}
         options={{ tabBarLabel: "Lieux" }}
       />
       <Tab.Screen

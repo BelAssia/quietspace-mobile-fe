@@ -7,7 +7,6 @@ import { AlertProvider } from "../context/AlertContext";
 import { useSelector } from "react-redux";
 
 export default function Root() {
-  // const userRole = useSelector((state) => state.auth.userRole);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <AlertProvider>
