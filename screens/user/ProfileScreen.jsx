@@ -1,12 +1,12 @@
-// ==================== screens/user/ProfileScreen.jsx ====================
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../../styles/user/userProfileStyles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth/AuthSlice";
+
 export default function ProfileScreen() {
   const dispatch = useDispatch();
-
+  const user = useSelector((state) => state.auth.user);
   const handleLogout = () => {
     // setIsLoggedIn(false);
     dispatch(logout());
@@ -18,8 +18,10 @@ export default function ProfileScreen() {
         <View style={styles.avatar}>
           <Ionicons name="person" size={40} color="#5B6FF0" />
         </View>
-        <Text style={styles.name}>Utilisateur</Text>
-        <Text style={styles.email}>user@example.com</Text>
+         <Text style={styles.name}>
+          {user?.username ?? "Utilisateur"}
+        </Text>
+        <Text style={styles.email}>{user?.email ?? "—"}</Text>
       </View>
 
       <View style={styles.stats}>

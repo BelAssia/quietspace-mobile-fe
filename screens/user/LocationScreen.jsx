@@ -1,4 +1,3 @@
-// ==================== screens/user/LocationScreen.jsx ====================
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../../styles/user/userLocationStyles';

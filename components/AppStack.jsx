@@ -3,6 +3,7 @@ import UserTabs from "./UserTabs";
 import AdminTabs from "./AdminTabs";
 import PlaceDetailsScreen from "../screens/shared/PlaceDetailsScreen";
 import { useSelector } from "react-redux";
+import AddReviewScreen from '../screens/user/AddReviewScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,16 @@ export default function AppStack() {
       ) : (
         <Stack.Screen name="UserTabs" component={UserTabs} />
       )}
+
       <Stack.Screen name="PlaceDetails" component={PlaceDetailsScreen} />
+      <Stack.Screen
+        name="AddReview" 
+        component={AddReviewScreen}
+        options={{
+          presentation: 'modal',
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }
