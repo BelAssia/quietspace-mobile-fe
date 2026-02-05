@@ -211,9 +211,9 @@ export default function PlaceDetailsScreen({ route, navigation }) {
                   <Ionicons name="star" size={24} color="#FFC107" />
                 </View>
                 <Text style={styles.statValue}>
-                  {lieu.avis?.length || 0}
+                  {lieu.note_moyenne !== null ? lieu.note_moyenne.toFixed(1) : '—'}
                 </Text>
-                <Text style={styles.statLabel}>Avis</Text>
+                <Text style={styles.statLabel}>Note moyenne</Text>
               </View>
               <View style={styles.statCard}>
                 <View style={styles.statIconContainer}>

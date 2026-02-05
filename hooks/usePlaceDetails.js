@@ -18,6 +18,15 @@ export const usePlaceDetails = (route, navigation) =>{
     }
   }, [lieuId, user?.id_user]);
 
+  // Recharger les données quand on revient sur la page (après avoir ajouté un avis)
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadLieuDetails();
+    });
+    return unsubscribe;
+  }, [navigation]);
+  
+
   const loadLieuDetails = async () => {
     try {
       setLoading(true);

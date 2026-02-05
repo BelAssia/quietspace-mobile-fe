@@ -3,7 +3,9 @@ import UserTabs from "./UserTabs";
 import AdminTabs from "./AdminTabs";
 import PlaceDetailsScreen from "../screens/shared/PlaceDetailsScreen";
 import { useSelector } from "react-redux";
-import AddReviewScreen from '../screens/user/AddReviewScreen';
+import AddReviewScreen from "../screens/user/AddReviewScreen";
+import AddPlaceScreen from "../screens/admin/AddPlaceScreen";
+import EditPlaceScreen from "../screens/admin/EditPlaceScreen";
 
 const Stack = createStackNavigator();
 
@@ -24,15 +26,31 @@ export default function AppStack() {
         <Stack.Screen name="UserTabs" component={UserTabs} />
       )}
 
+      {/* screen partagées */}
       <Stack.Screen name="PlaceDetails" component={PlaceDetailsScreen} />
       <Stack.Screen
-        name="AddReview" 
+        name="AddReview"
         component={AddReviewScreen}
         options={{
-          presentation: 'modal',
+          presentation: "modal",
           headerShown: false,
         }}
       />
+
+      {role === "admin" && (
+        <>
+          <Stack.Screen
+            name="AddPlace"
+            component={AddPlaceScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="EditPlace"
+            component={EditPlaceScreen}
+            options={{ headerShown: false }}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 }

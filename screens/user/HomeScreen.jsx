@@ -6,7 +6,7 @@ import { useFilter } from "../../hooks/useFilter";
 export default function FilterScreen({ navigation }) {
 const {searchQuery, setSearchQuery,showFilters, setShowFilters,userLocation,filteredLieux,typesLieux,
 loading,error,activeFiltersCount,handleLieuPress,getNiveauCalmeColor,getTypeLabel,getTypeIcon,formatDistance,
-resetFilters,toggleNiveauCalme,toggleType,distanceOptions,niveauxCalme, selectedNiveauCalme,selectedDistance,calculateDistance,selectedTypes,
+resetFilters,toggleNiveauCalme,toggleType,distanceOptions,niveauxCalme, selectedNiveauCalme,selectedDistance,setSelectedDistance,calculateDistance,selectedTypes,
 } = useFilter(navigation);
 
   return (

@@ -1,4 +1,3 @@
-// ==================== screens/admin/FeedbackScreen.jsx ====================
 import { View, Text, ScrollView } from 'react-native';
 import styles from '../../styles/admin/adminFeedbackStyles';
 

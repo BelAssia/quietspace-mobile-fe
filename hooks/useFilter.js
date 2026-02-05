@@ -15,6 +15,7 @@ export const useFilter = (navigation) =>{
   const [typesLieux, setTypesLieux] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [locationPermission, setLocationPermission] = useState(null);
 
   // États des filtres
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -61,7 +62,6 @@ export const useFilter = (navigation) =>{
   const loadTypesLieux = useCallback(async () => {
     try {
       const types = await getAllTypesLieux();
-      // Transformer les données pour le format attendu par le frontend
       const formattedTypes = types.map(type => ({
         id: type.idTypeLieu,
         name: type.typeLieu,
@@ -83,17 +83,12 @@ export const useFilter = (navigation) =>{
       setError(null);
       let data;
       if (userLocation) {
-        // data = await getClosestLieux(
-        //   userLocation.longitude,
-        //   userLocation.latitude,
-        //   50 // Récupérer les 50 lieux les plus proches
-        // );
         data = await getAllLieux(true);
       } else {
         data = await getAllLieux(true);
       }
       setLieux(data);
-      setFilteredLieux(data); // Initialiser filteredLieux avec tous les lieux
+      setFilteredLieux(data);
       setLoading(false);
     } catch (error) {
       setError('Impossible de charger les lieux');
@@ -117,14 +112,15 @@ export const useFilter = (navigation) =>{
     return R * c; // Distance en mètres
   }, []);
 
-  // Appliquer les filtres - OPTIMISÉ POUR ÉVITER LA BOUCLE INFINIE
+  // Appliquer les filtres
   const applyFilters = useCallback(() => {
     if (lieux.length === 0) {
-      console.log(' Pas de lieux à filtrer pour le moment');
+      console.log('Pas de lieux à filtrer pour le moment');
       return;
     }
     
     let filtered = [...lieux];
+    
     // Filtre par recherche
     if (searchQuery) {
       filtered = filtered.filter(lieu =>
@@ -169,28 +165,64 @@ export const useFilter = (navigation) =>{
         return distA - distB;
       });
     }
+    
     setFilteredLieux(filtered);
   }, [lieux, selectedTypes, selectedNiveauCalme, selectedDistance, searchQuery, userLocation, calculateDistance, niveauxCalme]);
 
-  // Récupérer la position de l'utilisateur - UNE SEULE FOIS
-  useEffect(() => {    
-    setUserLocation({
-      latitude: 33.5731,
-      longitude: -7.6177
-    });
-  }, []); // Pas de dépendances = exécuté une seule fois
+  // Récupérer la position réelle de l'utilisateur
+  const getUserLocation = useCallback(async () => {
+    try {
+      // Demander la permission d'accès à la localisation
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      setLocationPermission(status);
+      
+      if (status !== 'granted') {
+        console.log('Permission de localisation refusée');
+        // Fallback vers Casablanca si permission refusée
+        setUserLocation({
+          latitude: 33.5731,
+          longitude: -7.6177
+        });
+        return;
+      }
 
-  // Charger les types de lieux - UNE SEULE FOIS
+      // Récupérer la position actuelle
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced, // Bon équilibre entre précision et batterie
+      });
+
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      });
+
+      console.log('Localisation récupérée:', location.coords);
+    } catch (error) {
+      console.error('Erreur lors de la récupération de la localisation:', error);
+      // Fallback vers Casablanca en cas d'erreur
+      setUserLocation({
+        latitude: 33.5731,
+        longitude: -7.6177
+      });
+    }
+  }, []);
+
+  // Récupérer la position de l'utilisateur au chargement
+  useEffect(() => {    
+    getUserLocation();
+  }, [getUserLocation]);
+
+  // Charger les types de lieux
   useEffect(() => {
     loadTypesLieux();
   }, [loadTypesLieux]);
 
-  // Charger les lieux quand la position est disponible - UNE SEULE FOIS
+  // Charger les lieux quand la position est disponible
   useEffect(() => {
     if (userLocation) {
       fetchLieux();
     }
-  }, [userLocation]); // Uniquement quand userLocation change (une fois)
+  }, [userLocation, fetchLieux]);
 
   // Appliquer les filtres quand les filtres ou la recherche changent
   useEffect(() => {
@@ -242,21 +274,21 @@ export const useFilter = (navigation) =>{
     return niveau ? niveau.color : '#999';
   }, [niveauxCalme]);
 
-  //  FONCTION DE NAVIGATION ADAPTÉE À VOTRE STRUCTURE
   const handleLieuPress = useCallback((lieu) => {
-    // Navigation vers PlaceDetails qui est dans AppStack
     navigation.navigate('PlaceDetails', { 
       lieuId: lieu.id_lieu,
-      lieu: lieu // On passe aussi l'objet complet au cas où
+      lieu: lieu
     });
   }, [navigation]);
 
   const activeFiltersCount = selectedTypes.length + selectedNiveauCalme.length + (selectedDistance ? 1 : 0);
 
+  
 return {searchQuery, setSearchQuery,showFilters, setShowFilters,userLocation, setUserLocation,
 lieux, setLieux,filteredLieux, setFilteredLieux,typesLieux, setTypesLieux,loading, setLoading,
 error, setError,activeFiltersCount,handleLieuPress,getNiveauCalmeColor,getTypeLabel,getTypeIcon,
 formatDistance,resetFilters,toggleNiveauCalme,toggleType,distanceOptions,niveauxCalme, selectedNiveauCalme,
-selectedDistance,calculateDistance,selectedTypes
+selectedDistance,setSelectedDistance,calculateDistance,selectedTypes
 };
+ 
 };

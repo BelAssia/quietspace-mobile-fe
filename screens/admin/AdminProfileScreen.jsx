@@ -1,9 +1,14 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import styles from '../../styles/admin/adminProfileStyles';
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "../../styles/admin/adminProfileStyles";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/auth/AuthSlice";
+
 export default function AdminProfileScreen() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
   const handleLogout = () => {
-    // setIsLoggedIn(false);
+    dispatch(logout());
   };
 
   return (
@@ -12,8 +17,8 @@ export default function AdminProfileScreen() {
         <View style={styles.avatar}>
           <Ionicons name="shield-checkmark" size={40} color="#5B6FF0" />
         </View>
-        <Text style={styles.name}>Administrateur</Text>
-        <Text style={styles.email}>admin@quietspace.com</Text>
+        <Text style={styles.name}>{user?.username ?? "Administrateur"}</Text>
+        <Text style={styles.email}>{user?.email ?? "—"}</Text>
       </View>
 
       <View style={styles.menu}>

@@ -8,7 +8,7 @@ export default function ProfileScreen() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const handleLogout = () => {
-    // setIsLoggedIn(false);
+   
     dispatch(logout());
   };
 
