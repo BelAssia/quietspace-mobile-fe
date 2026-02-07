@@ -13,11 +13,8 @@ export const loginUser = createAsyncThunk(
                     token:data.access_token,
                     user:data.user
                 };
-
             }
-            
             return rejectWithValue("identifiants incorrects");
-            
         }catch(error){
             return rejectWithValue(error.message || "Erreur de connexion");
         }

@@ -1,33 +1,3 @@
-// import axios from "axios";
-// import { API_BASE_URL } from "../config/api.config";
-// import storageService from "../services/storageService";
-// const appAPI= axios.create(
-//     {
-//         baseURL: API_BASE_URL,
-//         timeout:5000,
-//         headers:
-//         {
-//             "Content-Type": "application/json",
-//         },
-//     }
-// );
-
-// appAPI.interceptors.request.use(
-//   async (config) => {
-//   const token = await storageService.getToken(); 
-//   if (token) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
-//   return config;
-
-// },(error)=>{
-//   return Promise.reject(error);
-// }
-// );
-
-// export default appAPI;
-
-
 import axios from "axios";
 import { API_BASE_URL } from "../config/api.config";
 import storageService from "../services/storageService";
@@ -70,12 +40,9 @@ appAPI.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Optionnel: Rafraîchir le token ou rediriger vers login
       await storageService.removeToken();
-      // Vous pourriez émettre un événement ou utiliser un contexte
-      // pour informer l'application de la déconnexion
-    }
-    
+   
+    } 
     return Promise.reject(error);
   }
 );
-
 export default appAPI;

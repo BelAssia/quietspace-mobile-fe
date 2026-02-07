@@ -12,7 +12,6 @@ const Stack = createStackNavigator();
 export default function AppStack() {
   const user = useSelector((state) => state.auth.user);
   const role = user?.role || "user";
-  console.log("Navigation avec rôle:", role);
 
   return (
     <Stack.Navigator
