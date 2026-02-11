@@ -14,7 +14,6 @@ export const useLocationTracking = () => {
   });
   
   const locationSubscription = useRef(null);
-  // 🆕 Pour calculer la vitesse manuellement
   const lastPosition = useRef(null);
   const lastTimestamp = useRef(null);
 
@@ -196,7 +195,6 @@ export const useLocationTracking = () => {
           if (finalSpeed === null || finalSpeed === undefined || finalSpeed < 0) {
             finalSpeed = calculatedSpeed;
           } else if (Math.abs(finalSpeed - calculatedSpeed) > 10) {
-            console.log(`⚠️ Vitesse incohérente: API=${finalSpeed} m/s, calculée=${calculatedSpeed.toFixed(2)} m/s`);
             finalSpeed = calculatedSpeed;
           }
 
@@ -211,11 +209,6 @@ export const useLocationTracking = () => {
             accuracy: location.coords.accuracy,
             timestamp: newTimestamp,
           };
-
-          console.log('📡 Position mise à jour:', {
-            ...locationData,
-            speedKmh: (locationData.speed * 3.6).toFixed(2) + ' km/h'
-          });
           
           socket.emit('updateLocation', locationData);
         },
