@@ -28,7 +28,6 @@ export default function ManagePlacesScreen({ navigation }) {
     getNiveauCalmeColor,
     handleLieuPress,
   } = useManagePlaces(navigation);
-  // ✅ Afficher le loader tant que les données ne sont pas chargées
   if (loading) {
     return (
       <View style={[styles.container, styles.centerContent]}>
@@ -126,11 +125,10 @@ export default function ManagePlacesScreen({ navigation }) {
       </View>
     ) : (
       filteredLieux.map((lieu) => (
-        // ✅ TOUCHABLE SUR TOUTE LA CARTE
         <TouchableOpacity
           key={lieu.id_lieu}
           style={styles.placeCard}
-          onPress={() => handleLieuPress(lieu)} // ✅ Navigation vers détails
+          onPress={() => handleLieuPress(lieu)} 
           activeOpacity={0.7}
         >
           <View style={styles.placeHeader}>
@@ -142,7 +140,7 @@ export default function ManagePlacesScreen({ navigation }) {
               <TouchableOpacity
                 style={styles.iconButton}
                 onPress={(e) => {
-                  e.stopPropagation(); // ✅ Empêche la propagation au parent
+                  e.stopPropagation(); 
                   navigation.navigate("EditPlace", { lieuId: lieu.id_lieu });
                 }}
               >
@@ -153,7 +151,7 @@ export default function ManagePlacesScreen({ navigation }) {
               <TouchableOpacity
                 style={styles.iconButton}
                 onPress={(e) => {
-                  e.stopPropagation(); // ✅ Empêche la propagation au parent
+                  e.stopPropagation(); 
                   handleDelete(lieu.id_lieu, lieu.nom_lieu);
                 }}
               >
@@ -198,7 +196,7 @@ export default function ManagePlacesScreen({ navigation }) {
               </Text>
             </View>
           </View>
-        </TouchableOpacity> // ✅ Fermeture du TouchableOpacity principal
+        </TouchableOpacity> 
       ))
     )}
   </ScrollView>
