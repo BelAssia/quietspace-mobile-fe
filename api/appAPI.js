@@ -4,7 +4,7 @@ import storageService from "../services/storageService";
 
 const appAPI = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 15000, // Augmenté pour les uploads d'images
+  timeout: 15000, 
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,7 +13,6 @@ const appAPI = axios.create({
 // Intercepteur pour ajouter le token
 appAPI.interceptors.request.use(
   async (config) => {
-    // Ne pas modifier les headers pour FormData (axios le fait automatiquement)
     if (!(config.data instanceof FormData)) {
       config.headers["Content-Type"] = "application/json";
     }
@@ -38,7 +37,6 @@ appAPI.interceptors.response.use(
   async (error) => {
     // Gérer les erreurs d'authentification (401)
     if (error.response && error.response.status === 401) {
-      // Optionnel: Rafraîchir le token ou rediriger vers login
       await storageService.removeToken();
    
     } 
