@@ -32,8 +32,6 @@ export default function LocationScreen() {
     handleMapPress,
     recenterMap,
   } = useLocationScreen();
-
-  // 🆕 Hook pour le tracking en temps réel
   const {
     isConnected,
     isTracking,
@@ -86,7 +84,6 @@ export default function LocationScreen() {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* 🆕 Section Tracking en temps réel */}
         <View style={styles.section}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
             <View style={{ flex: 1 }}>
@@ -116,8 +113,6 @@ export default function LocationScreen() {
             </View>
           )}
         </View>
-
-        {/* 🆕 Lieux à proximité détectés par le tracking */}
         {isTracking && nearbyPlaces.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>
@@ -257,7 +252,6 @@ export default function LocationScreen() {
               showsMyLocationButton={false}
               onPress={handleMapPress}
             >
-              {/* 🆕 Cercle buffer de 200m autour de l'utilisateur */}
               {isTracking && userLocation && (
                 <Circle
                   center={userLocation}
@@ -268,12 +262,9 @@ export default function LocationScreen() {
                 />
               )}
 
-              {/* Marqueur manuel (clic sur la carte) */}
               {markerCoordinate && !isTracking && (
                 <Marker coordinate={markerCoordinate} pinColor="#5B6FF0" />
               )}
-
-              {/* 🆕 Marqueurs des lieux détectés par le tracking */}
               {isTracking &&
                 nearbyPlaces.map((place) => (
                   <Marker
