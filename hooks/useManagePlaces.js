@@ -4,12 +4,12 @@ import { getAllTypesLieux } from "../services/typeLieuService";
 import {
   Alert,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native"; // ✅ AJOUT
+import { useFocusEffect } from "@react-navigation/native"; 
 
 export const useManagePlaces = (navigation) =>{
   const [lieux, setLieux] = useState([]);
   const [filteredLieux, setFilteredLieux] = useState([]);
-  const [typesLieu, setTypesLieu] = useState([]); // ✅ Initialisé comme tableau vide
+  const [typesLieu, setTypesLieu] = useState([]); 
   const [loading, setLoading] = useState(true);
 
   // Filtres
@@ -17,14 +17,13 @@ export const useManagePlaces = (navigation) =>{
   const [selectedType, setSelectedType] = useState("all");
   const [sortBy, setSortBy] = useState("recent");
 
-  // ✅ Charger les données au montage du composant
+
   useFocusEffect(
     useCallback(() => {
       loadData();
     }, []),
   );
 
-  // ✅ Appliquer les filtres quand les données ou filtres changent
   useEffect(() => {
     if (lieux.length > 0) {
       applyFilters();
@@ -35,19 +34,18 @@ export const useManagePlaces = (navigation) =>{
     try {
       setLoading(true);
 
-      console.log("📡 Chargement des données...");
 
       // Charger les types de lieux
       const typesData = await getAllTypesLieux();
-      console.log("✅ Types de lieux chargés:", typesData);
+      console.log(" Types de lieux chargés:", typesData);
       setTypesLieu(Array.isArray(typesData) ? typesData : []);
 
       // Charger les lieux
       const lieuxData = await getAllLieux();
-      console.log("✅ Lieux chargés:", lieuxData);
+      console.log("Lieux chargés:", lieuxData);
       setLieux(Array.isArray(lieuxData) ? lieuxData : []);
     } catch (error) {
-      console.error("❌ Erreur lors du chargement:", error);
+      console.error("Erreur lors du chargement:", error);
       Alert.alert(
         "Erreur",
         "Impossible de charger les données: " + error.message,
