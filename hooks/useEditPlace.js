@@ -80,10 +80,6 @@ export const useEditPlace = (navigation,route) =>{
   const loadLieu = async () => {
     try {
       const data = await getLieuById(lieuId, true);
-      console.log("✅ Lieu chargé avec image:", {
-        imageLieu: data.imageLieu,
-        fullData: data,
-      });
 
       const initialData = {
         nomLieu: data.nom_lieu || "",
