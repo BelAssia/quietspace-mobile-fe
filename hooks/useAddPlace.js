@@ -51,8 +51,6 @@ export const useAddPlace = (navigation) =>{
     try {
       console.log("📡 Chargement des types de lieux...");
       const data = await getAllTypesLieux();
-      console.log("✅ Types de lieux reçus:", data);
-
       if (Array.isArray(data) && data.length > 0) {
         setTypesLieu(data);
         setFormData((prev) => ({ ...prev, idTypeLieu: data[0].idTypeLieu }));
@@ -61,7 +59,6 @@ export const useAddPlace = (navigation) =>{
         Alert.alert("Attention", "Aucun type de lieu disponible");
       }
     } catch (error) {
-      console.error("❌ Erreur chargement types:", error);
       Alert.alert("Erreur", "Impossible de charger les types de lieu");
       setTypesLieu([]);
     } finally {
